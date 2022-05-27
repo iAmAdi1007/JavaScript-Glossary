@@ -38,7 +38,7 @@ console.log(arr.pop());
 console.log(arr)
 
 //Alternative to add element to the end of the array
-arr[4] = 193;
+arr[4] = 193; // When array size is 4, using this we can add a fifth element to the array
 console.log(arr);
 
 /* Shift: Removes element from the start of the array and Unshift: Adds element to the start of the array. Time Complexity O(n) methods */
