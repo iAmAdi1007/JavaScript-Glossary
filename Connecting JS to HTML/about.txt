@@ -1,0 +1,20 @@
+/* We generally tend to put in the js script file at the end of the Body. Why??
+The reason is the browser reads the HTML file from top to bottom so if we put it in the head, it will just read it and since most of the actions that JS does depends on the DOM being completely loaded, browser does not recognize any of the things.
+
+Example:  See the script.js
+We are trying to fetch an element from the DOM when the HTML has not been completely parsed.
+
+This is why we have added the script in the body at the end of all HTML, but this does not seem symantically right.
+We have an alternative where we can add event listener to the window object to wait for the DOM to be completely loaded(see script line)
+Event listener : "DOMContentLoaded"
+We can also use event listener "load". Works the same.
+
+Difference b/w them : "DOMContentLoaded" waits for the browser to construct the complete DOM tree while "load" waits for all the images/stylesheets etc. to get loaded
+
+Another approach is using "defer"
+"defer" what it does is allows the browser to download & parse the JS file but allows to execute only after DOMContentLoaded event is fired.
+
+"async" can be used, but it might result in inconsistent behaviours : what basically it says is that don't wait to download and parse the JS file and continue parsing the HTML asynchronously.
+
+Most Preferred Way should be "defer"
+*/
