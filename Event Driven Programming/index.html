@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./eventDrivenProgramming.js" defer></script>
+    <style>
+        #scrollable{
+            overflow: auto;
+            background-color: lightblue;
+            width:500px;
+            border: 2px solid black;
+            margin-top: 5px;
+            height: 90px;
+        }
+        div{
+            margin: 15px;
+            border: 2px solid blueviolet;
+            min-height: 100px;
+            min-width: 100px;
+            padding:5px;
+        }
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    <button draggable="true">Click Me</button>
+
+    <div id="scrollable">
+        <p>This has some content</p>
+        <p>This has some content</p>
+        <p>This has some content</p>
+        <p>This has some content</p>
+        <p>This has some content</p>
+        <p>This has some content</p>
+        <p>This has some content</p>
+        <p>This has some content</p>
+        <p>This has some content</p>
+        <p>This has some content</p>
+    </div>
+
+    <div id="grandParent">
+        <div id="parent">
+            <div id="child">
+
+            </div>
+        </div>
+    </div>
+
+    <div id="category">
+        <ul>
+            <li id="laptops">Laptops</li>
+            <li id="phones">Phones</li>
+            <li id="tablets">Tablets</li>
+        </ul>
+    </div>
+</body>
+</html>
