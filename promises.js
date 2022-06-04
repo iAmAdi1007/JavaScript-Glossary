@@ -94,3 +94,122 @@ Promise.all([
 ])
   .then(console.log)
   .catch((err) => console.log("This " + err));
+
+/* Promise.race : This takes in an array of promises and focuses on the first promise to get rejected/resolved*/
+
+Promise.race([
+  new Promise((res, rej) => {
+    setTimeout(() => {
+      res("Promise 1");
+    }, 1000);
+  }),
+  new Promise((res, rej) => {
+    setTimeout(() => {
+      res("Promise 2");
+    }, 1500);
+  }),
+  new Promise((res, rej) => {
+    setTimeout(() => {
+      res("Promise 3");
+    }, 500);
+  }),
+]).then(console.log); // Output : Promise 3
+
+Promise.race([
+  new Promise((res, rej) => {
+    setTimeout(() => {
+      res("Promise 1");
+    }, 1000);
+  }),
+  new Promise((res, rej) => {
+    setTimeout(() => {
+      res("Promise 2");
+    }, 1500);
+  }),
+  new Promise((res, rej) => {
+    setTimeout(() => {
+      rej("Oh No : Promise Rejected");
+    }, 500);
+  }),
+])
+  .then(console.log)
+  // OUTPUT
+  //node:internal/process/promises:246
+  // triggerUncaughtException(err, true /* fromPromise */);
+  // ^
+
+  // [UnhandledPromiseRejection: This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). The promise rejected with the reason "Oh No : Promise Rejected".] {
+  // code: 'ERR_UNHANDLED_REJECTION'
+  // }
+  .catch((err) => console.log("Error Handled-->" + err));
+
+/* Promise.any : This takes in an array of promises but unlike Promise.race this waits for the first promise to get resolved and throws an error only in case none of the promises in the array got resolved(all got rejected) */
+
+Promise.any([
+  new Promise((res, rej) => {
+    setTimeout(() => {
+      res("Promise 1"); // OUTPUT : Promise 1
+    }, 1000);
+  }),
+  new Promise((res, rej) => {
+    setTimeout(() => {
+      res("Promise 2");
+    }, 1500);
+  }),
+  new Promise((res, rej) => {
+    setTimeout(() => {
+      rej("Oh No : Promise Rejected");
+    }, 500);
+  }),
+])
+  .then(console.log)
+  .catch((err) => console.log("Error Handled-->" + err));
+// In the above case, the 3rd promise in the array got rejected first after which the first promise got resolved. Promise.any instead of throwing an error on rejection of the 3rd promise waited for the first promise to get resolved.
+
+Promise.any([
+  new Promise((res, rej) => {
+    setTimeout(() => {
+      rej("Promise 1 rejected");
+    }, 1000);
+  }),
+  new Promise((res, rej) => {
+    setTimeout(() => {
+      rej("Promise 2 rejected");
+    }, 1500);
+  }),
+  new Promise((res, rej) => {
+    setTimeout(() => {
+      rej("Promise 3 Rejected");
+    }, 500);
+  }),
+])
+  .then(console.log)
+  // OUTPUT :
+  // node:internal/process/promises:246
+  //           triggerUncaughtException(err, true /* fromPromise */);
+  //           ^
+
+  // [AggregateError: All promises were rejected]
+  .catch((err) => console.log("Error Handled"));
+
+/* ASYNC - AWAIT : An alternative to then?? */
+
+/* Async functions return promises */
+async function demo() {
+  return 35;
+}
+
+console.log(demo()); // OUTPUT : Promise { 35 }
+
+/* Using await we can wait for the promise to get resolved/rejcted. We can use await only inside an async function */
+
+async function demoAwait(){
+  const value = await new Promise((res, rej)=>{
+    setTimeout(()=>{
+      res("Inside demoAwait")
+    }, 1500)
+  });
+  console.log(value);
+}
+
+demoAwait();
