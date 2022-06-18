@@ -88,25 +88,161 @@ newArr = arr.map(function(value){
 console.log(newArr);
 console.log(arr);
 
+
+
+/****************************************************************************/
+// PolyFill for Map function
+Array.prototype.myMap = function(callback){
+    let arr = []
+    for(let i = 0; i < this.length; i++){
+        arr.push(callback(this[i], i, this))
+    }
+    return arr;
+}
+
+let sampleArr = [10, 20, 30, 40, 50]
+let result = sampleArr.map(function(value){
+    return value / this.num
+},{num : 10})
+console.log('Default Map Result')
+console.log(result)
+
+let arrayProto = Object.getPrototypeOf([]);
+console.log(Object.getOwnPropertyNames(arrayProto))
+
+let customResult = sampleArr.myMap(function(value){
+    return value / 10
+})
+console.log('Custom Map Result')
+console.log(customResult)
+
+
+/************************************************************************** */
+
+// PolyFill for for-each
+console.log('For- Each Loop')
+sampleArr = [1, 2, 3, 4, 5]
+sampleArr.forEach(function (value, index, array){
+    if(value % 2 === 0){
+        console.log('Even')
+    }else{
+        console.log('Odd')
+    }
+})
+
+Array.prototype.myForEach = function(callback){
+    for(let i = 0; i < this.length; i++){
+        callback(this[i], i, this)
+    }
+    
+}
+console.log('Custom For Each Loop')
+sampleArr.myForEach(function(value){
+    if(value % 2 === 0){
+        console.log('Even')
+    }else{
+        console.log('Odd')
+    }
+})
+
+/********************************************************************* */
+
+
+
 newArr = arr.filter(function(value){
     return value === this.num
 },{num : 10})
 
+console.log('Default Filter Implementation')
 console.log(newArr);
 console.log(arr);
 
-console.log(arr.reduce((accumulator, currVal)=>{
+/************************************************************************* */
+//PolyFill Filter Function
+
+Array.prototype.myFilter = function(callback){
+    let arr = [];
+    for(let i = 0; i < this.length; i++){
+        if(callback(this[i], i, this) === true){
+            arr.push(this[i])
+        }
+    }
+    return arr
+}
+
+newArr = arr.myFilter((value)=>{
+    return value === 10
+})
+console.log('Custome Filter Implementation')
+console.log(newArr)
+console.log(arr)
+
+
+/************************************************************************ */
+
+
+console.log('Default Reduce Implementation')
+console.log(arr.reduce((accumulator,currVal)=>{
     return accumulator + currVal;
 },0));
+
+/*********************************************************************** */
+// PolyFill for Reduce Function
+
+Array.prototype.myReduce = function(callback, initialValue){
+    let acc = initialValue
+    for(let i = 0; i < this.length; i++){
+        if(i === 0 && initialValue === undefined){
+            acc = this[0]
+            continue
+        }
+        acc = callback(acc, this[i], i, this)
+    }
+    return acc
+}
+
+console.log('Custom Reduce Implementation')
+console.log(arr.reduce((accumulator,currVal)=>{
+    return accumulator + currVal;
+},0));
+
+
+
+
+/************************************************************************ */
 
 // Reduce Right : This is similar to reduce, the only difference is the execution starts from the right rather than left
 
 let res = arr.reduceRight((accumulator, currVal)=>{
     return accumulator - currVal;
 },0);//Reduce with initial value
+console.log('Default Reduce Right Implementation')
+console.log(res);
+
+Array.prototype.myReduceRight = function(callback, initialValue){
+    let acc = initialValue
+    for(let i = this.length - 1; i >= 0; i--){
+        if(i === this.length - 1 && initialValue === undefined){
+            acc = this[i]
+            continue
+        }
+        acc = callback(acc, this[i], i, this)
+    }
+    return acc
+}
+
+res = arr.myReduceRight((accumulator, currVal)=>{
+    return accumulator - currVal;
+},0);//Reduce with initial value
+console.log('Custom Reduce Right Implementation')
 console.log(res);
 
 res = arr.reduceRight((accumulator, currVal)=>{
+    return accumulator - currVal;
+}); //Recuce without the initial value
+console.log(res);
+
+res = arr.myReduceRight((accumulator, currVal)=>{
     return accumulator - currVal;
 }); //Recuce without the initial value
 console.log(res);
