@@ -1,0 +1,39 @@
+Q. Why use 'type=module' ?
+
+Ans: If we use several different scripts in our HTML files, all the functions/classes etc. present in those files become globally accessible giving rise to multiple issues when working with a big code base.
+
+
+Q. Do we need to specify 'defer' along with 'type=module' when adding a script tag?
+
+Ans : No, the 'defer' is automatically taken into consideration when using 'type=module'.
+
+
+Q. What are default exports and when are they generally used?
+
+Ans : When there is a single object to export eg: function, class etc. , we generally make use of default exports.
+
+SYNTAX:
+export default <objectName>
+
+To import the file
+import objectName from 'filepath/filename'
+
+Q. What is conditional importing?
+
+Ans : In case our imports are expensive server calls and are required only in case when a condition is met, we would not import the required function/object/class. Here we make use of conditional importing which in turn makes use of a function named 'import' which returns a promise.
+
+SYNTAX:
+
+if(true){
+    const {functionA, functionB} = await import('filepath/filename')
+    functionA()
+}
+
+Q. What is IIFE ?
+
+Ans : Immediately Invoked Function Expression is a function which is immediately called after its definition. Can be used for a variety of purpose, most notably to create a function scope to isolate code.
+
+SYNTAX :
+(function(){
+    console.log('Example of IIFE')
+})()
