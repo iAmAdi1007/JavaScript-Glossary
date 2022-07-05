@@ -6,8 +6,8 @@ const array = new Array(11,12,13,14);
 console.log(array);
 
 /*    Splice Function: Used to return part of the array for selected indexes
-Works In Place, params : stIndex(inclusive) & endIndex(exclusive) */
-console.log(arr.splice(0, 2));
+Works In Place, params : stIndex(inclusive) & no of deletions */
+console.log(arr.splice(0, 2)); // OUTPUT : [1, 2]
 console.log(arr);
 
 // Can be used to insert elements as well. Inserting 10, 11 at 1st index
@@ -19,14 +19,17 @@ Returns a new array, params : stIndex(inclusive) & endIndex(exclusive)*/
 
 let newArr = arr.slice(1, 3);
 console.log(newArr);
+console.log(arr)
 
 /* Reverse : In place, Sort: In place(takes comparator)*/
 console.log(arr.reverse());
 const comparator = (a, b) => {
-    if(a > b) return -1;
-    else if(a < b) return 1;
+    if(a > b) return 1;
+    else if(a < b) return -1;
     else return 0;
 }
+arr.sort();
+console.log(arr)
 arr.sort(comparator);
 console.log(arr);
 
@@ -50,6 +53,7 @@ console.log(arr);
 
 //Type of Array : Object
 console.log(typeof arr);
+console.log(typeof null)
 //Instance of & isArray : Usage to check if the given variable is an array as generally in JS most of the things are objects
 console.log(Array.isArray(arr));
 console.log(arr instanceof Array);
@@ -62,14 +66,15 @@ console.log(arr);
 
 /* Join Method: Returns a new string, params : a delimiter */
 let str = arr.join('|');
+console.log(str)
 console.log(typeof str);
 console.log(arr);
 
 /* For Each - Iterating through Array ***TERNARY USAGE***
-NOTE :  When putting a function it takes the argument passed as this, for anonymous function the same does not work */
+NOTE :  When putting a function it takes the argument passed as this, for arrow function the same does not work */
 arr.forEach(function(value, index, array){
     console.log(value + ' @index: ' + index);
-    console.log(value === this.num ? value : undefined);
+    console.log(value !== this.num ? value : undefined);
     console.log(array);
 },{num:10});
 
@@ -108,6 +113,7 @@ console.log('Default Map Result')
 console.log(result)
 
 let arrayProto = Object.getPrototypeOf([]);
+console.log(arrayProto)
 console.log(Object.getOwnPropertyNames(arrayProto))
 
 let customResult = sampleArr.myMap(function(value){
