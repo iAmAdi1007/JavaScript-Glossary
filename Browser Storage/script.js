@@ -42,7 +42,7 @@ console.log(skill)
 // Difference b/w local Storage and session storage is that local storage persists in the browser while session storage gets removed on the end of a session
 
 
-localStorage.setItem('key','value')
+localStorage.setItem('key', 'value')
 localStorage.getItem('key')
 localStorage.removeItem('key')
 localStorage.clear()
@@ -51,3 +51,56 @@ localStorage.clear()
 /************************************************************************************** */
 
 // INDEXED DBs
+
+const request = indexedDB.open('myDatabase', 1)
+
+//Create a DataBase
+request.addEventListener('upgradeneeded', e => {
+    const database = e.target.result
+    const store = database.createObjectStore('users', { keyPath: 'id' })
+    store.createIndex('name', 'name')
+
+    store.add({
+        id: 0,
+        name: 'Aditya',
+        skill: 'JavaScript'
+    })
+    store.add({
+        id: 1,
+        name: 'Sourabh',
+        skill: 'Java'
+    })
+})
+
+// Add to the database
+request.addEventListener('success', e => {
+    const db = e.target.result
+    db.transaction(['users'], 'readwrite')
+        .objectStore('users')
+        .add({
+            id: 3,
+            name: 'Yash',
+            skill: 'Java'
+        })
+})
+
+// Delete from the Database
+request.addEventListener('success', e => {
+    const db = e.target.result
+    db.transaction(['users'], 'readwrite')
+        .objectStore('users')
+        .delete(1)
+})
+
+// Get from the database
+request.addEventListener('success', e =>{
+    const db = e.target.result
+    const req = db.transaction(['users'], 'readwrite')
+                    .objectStore('users')
+                    .get(0)
+
+    req.addEventListener('success', e =>{
+        console.log(e.target.result)
+    })
+})
+
